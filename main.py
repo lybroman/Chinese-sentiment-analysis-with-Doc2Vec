@@ -69,8 +69,8 @@ train, test, train_label, test_label = ms.train_test_split(
 classifier = lm.LogisticRegression()
 classifier.fit(train, train_label)
 
-# check the score(R^2)
-# >0.6 is reasonable good
+# 5 check the score(R^2)
+# > 0.6 is reasonable good
 print(classifier.score(test, test_label))
 
 # i will add more valdation code later
