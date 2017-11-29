@@ -4,6 +4,8 @@ import gensim, smart_open
 import sklearn.model_selection as ms
 import sklearn.linear_model as lm
 import numpy as np
+from sklearn.externals import joblib
+
 
 # here we select the lowest-score samples and highest-score samples
 # our goal is to train a model which could tell good comments from bad comments
@@ -24,6 +26,7 @@ def read_corpus(source_set):
 train_corpus = list(read_corpus(sources_train))
 # print(train_corpus[0])
 
+
 # 1. create the Doc2Vec model
 # you need to adjust the hyper-parameters, e.g. size and iter
 model = gensim.models.doc2vec.Doc2Vec(size=150, min_count=1, iter=50, workers=7)
@@ -37,7 +40,7 @@ for epoch in range(1):
     model.train(train_corpus, total_examples=model.corpus_count, epochs=model.iter)
 
 # save you model if you wanna to reload directly next time
-# model.save('./my_db.d2v')
+model.save('./my_db.d2v')
 # e.g. model = gensim.Doc2Vec.load('./my_db.d2v')
 
 # 4. train classifier
@@ -73,5 +76,5 @@ classifier.fit(train, train_label)
 # > 0.6 is reasonable good
 print(classifier.score(test, test_label))
 
-# i will add more valdation code later
-# i will also show how to evaluate a new comment later
+# 6 save the classifer for future use
+joblib.dump(classifier,'classifier.model')

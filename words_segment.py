@@ -19,7 +19,7 @@ for tag in label:
                         line = ff.read()
 
                         # filter some non-related chars
-                        filter_chars = "\r\n，。；！,.:;：、"
+                        filter_chars = "\r\n\t，。；！,.:;：、“”‘’"
                         trans_dict = dict.fromkeys((ord(_) for _ in filter_chars), '')
                         line = line.translate(trans_dict)
 
