@@ -57,6 +57,7 @@ with open('./5_test.txt', 'r', encoding='utf-8') as f, open('./5_sim.txt', 'w', 
         if not line: break
         line_ls = line.split(' ')
         # pls fine-tune your hyper-parameters: alpha & steps
+        # as there is random seed, you could infer for N times and use the average as the final infer vector
         line_vec = model.infer_vector(line_ls, alpha=0.05, steps=50)
 
         # find the most similar docs/sentence
