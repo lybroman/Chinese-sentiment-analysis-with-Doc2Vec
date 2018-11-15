@@ -56,7 +56,7 @@ with open('./2_test.txt', 'r', encoding='utf-8') as f, open('./2_sim.txt', 'w', 
 
 		res0[int(rf.predict([line_vec]))] += 1
 
-print('Accuracy for negative comments: %s' % (res0[0] / (res0[0] +res0[1]), ))
+print('Accuracy for negative comments: %s' % (res0[0] / (res0[0] + res0[1]), ))
 
 
 with open('./5_test.txt', 'r', encoding='utf-8') as f, open('./5_sim.txt', 'w', encoding='utf-8') as ff:
@@ -67,6 +67,7 @@ with open('./5_test.txt', 'r', encoding='utf-8') as f, open('./5_sim.txt', 'w', 
 		line_ls = line.split(' ')
 		# pls fine-tune your hyper-parameters: alpha & steps
 		# as there is random seed, you could infer for N times and use the average as the final infer vector
+		# it will take more time but have high accuracy
 		line_vec = model.infer_vector(line_ls, alpha=0.05, steps=50)
 		for _ in range(0, 9):
 			line_vec += model.infer_vector(line_ls, alpha=0.05, steps=50)
