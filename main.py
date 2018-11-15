@@ -10,17 +10,17 @@ from sklearn.externals import joblib
 # here we select the lowest-score samples and highest-score samples
 # our goal is to train a model which could tell good comments from bad comments
 
-sources_train = {'1_train.txt':'ONE', '5_train.txt':'FIVE'}
+sources_train = {'1_train.txt': 'ONE', '5_train.txt': 'FIVE'}
 
 
 def read_corpus(source_set):
-    ct = 0
     for source_file, prefix in source_set.items():
         with smart_open.smart_open(source_file, encoding="utf-8") as f:
             for i, line in enumerate(f):
                 # split with space to isolate each word
                 # the words list are tagged with a label as its identity
                 yield gensim.models.doc2vec.TaggedDocument(gensim.utils.to_unicode(line).split(), [prefix + '_%s' % i])
+
 
 # 0. load tagged corpus
 train_corpus = list(read_corpus(sources_train))
@@ -29,7 +29,7 @@ train_corpus = list(read_corpus(sources_train))
 
 # 1. create the Doc2Vec model
 # you need to adjust the hyper-parameters, e.g. size and iter
-model = gensim.models.doc2vec.Doc2Vec(size=150, min_count=1, iter=50, workers=7)
+model = gensim.models.doc2vec.Doc2Vec(vector_size=150, min_count=1, epochs=50, workers=7)
 
 # 2. build vocabulary
 model.build_vocab(train_corpus)
@@ -77,4 +77,4 @@ classifier.fit(train, train_label)
 print(classifier.score(test, test_label))
 
 # 6 save the classifer for future use
-joblib.dump(classifier,'classifier.model')
+joblib.dump(classifier, 'classifier.model')
